@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Basic Example
+Comment=Hello World for APRIL
+Categories=Utility;Amusement;
+Terminal=false
+X-APRIL-Module=@BUILDDIR@/examples/basic/com.example.basic.@MOD_EXT@
+X-APRIL-ApplicationType=example_application_my_application_get_type

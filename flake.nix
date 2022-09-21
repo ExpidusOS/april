@@ -6,7 +6,12 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, vadi, ... }:
+  inputs.libtokyo = {
+    url = github:ExpidusOS/libtokyo;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, vadi, libtokyo, ... }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -23,6 +28,7 @@
         let
           pkgs = nixpkgsFor.${system};
           vadi-pkg = vadi.packages.${system}.default;
+          libtokyo-pkg = libtokyo.packages.${system}.gtk4;
         in
         {
           default = pkgs.stdenv.mkDerivation rec {
@@ -32,7 +38,7 @@
 
             enableParallelBuilding = true;
             nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala ];
-            buildInputs = with pkgs; [ glib vadi-pkg ];
+            buildInputs = with pkgs; [ glib vadi-pkg appstream libtokyo-pkg libadwaita gtk4 ];
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/april";
@@ -46,6 +52,7 @@
         let
           pkgs = nixpkgsFor.${system};
           vadi-pkg = vadi.packages.${system}.default;
+          libtokyo-pkg = libtokyo.packages.${system}.gtk4;
         in
         {
           default = pkgs.mkShell {
@@ -57,6 +64,10 @@
               gcc
               glib
               vadi-pkg
+              libtokyo-pkg
+              libadwaita
+              gtk4
+              appstream
             ];
           };
         });

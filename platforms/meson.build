@@ -1,1 +1,1 @@
-subdir('expidus')
+subdir('expidus', if_found: libtokyo)
