@@ -1,8 +1,8 @@
 libapril_build_vala = configure_file(input: 'lib/build.vala.in', output: 'build.vala',
   configuration: conf_data)
 
-libapril_src = ['lib/abi.vala', 'lib/application.vala', 'lib/platform.vala', 'lib/platform/service.vala',
-  'lib/platform/service/application-launcher.vala', 'lib/platform/service/application.vala', libapril_build_vala]
+libapril_src = ['lib/abi.vala', 'lib/application.vala', 'lib/platform.vala', 'lib/view.vala', 'lib/platform/service.vala',
+  'lib/platform/service/application-launcher.vala', 'lib/platform/service/application.vala', 'lib/platform/service/view.vala', libapril_build_vala]
 libapril_deps = [gobject, vadi, appstream, gmodule]
 
 libapril_shlib = shared_library('april', libapril_src,

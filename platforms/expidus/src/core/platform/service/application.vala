@@ -60,5 +60,9 @@ namespace AprilExpidus {
     public override void launch(April.Application application, GLib.HashTable<string, GLib.Variant> args) {
       this._applications.get(application.metadata.id).run(args);
     }
+
+    public TokyoGtk.Application get_gtk_application(April.Application application) {
+      return this._applications.get(application.metadata.id);
+    }
   }
 }
