@@ -24,5 +24,7 @@ if git.found()
 endif
 
 gobject = dependency('gobject-2.0')
+vadi = dependency('vadi-0.0')
 
 subdir('core')
+subdir('examples')

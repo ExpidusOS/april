@@ -1,7 +1,12 @@
 {
   description = "APRIL - Application Runtime Integration Library";
 
-  outputs = { self, nixpkgs, ... }:
+  inputs.vadi = {
+    url = github:ExpidusOS/Vadi/feat/nix;
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+
+  outputs = { self, nixpkgs, vadi, ... }:
     let
       supportedSystems = [
         "aarch64-linux"
@@ -17,6 +22,7 @@
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          vadi-pkg = vadi.packages.${system}.default;
         in
         {
           default = pkgs.stdenv.mkDerivation rec {
@@ -26,7 +32,7 @@
 
             enableParallelBuilding = true;
             nativeBuildInputs = with pkgs; [ meson ninja pkg-config vala ];
-            buildInputs = with pkgs; [ glib ];
+            buildInputs = with pkgs; [ glib vadi-pkg ];
 
             meta = with pkgs.lib; {
               homepage = "https://github.com/ExpidusOS/april";
@@ -39,6 +45,7 @@
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          vadi-pkg = vadi.packages.${system}.default;
         in
         {
           default = pkgs.mkShell {
@@ -49,6 +56,7 @@
               vala
               gcc
               glib
+              vadi-pkg
             ];
           };
         });
